@@ -1752,7 +1752,7 @@ void CInputMain::Move(LPCHARACTER ch, const char * data)
 #ifdef ENABLE_KEYTO_CHARACTER
 		if (((false == ch->IsRiding() && fDist > 45) || fDist > 60) && OXEVENT_MAP_INDEX != ch->GetMapIndex())
 #else
-		if (((false == ch->IsRiding() && fDist > 25) || fDist > 60) && OXEVENT_MAP_INDEX != ch->GetMapIndex())
+		if (((false == ch->IsRiding() && fDist > 25) || fDist > 1000) && OXEVENT_MAP_INDEX != ch->GetMapIndex())
 #endif
 		{
 #ifdef ENABLE_HACK_TELEPORT_LOG // @warme006
@@ -2276,7 +2276,7 @@ void CInputMain::SafeboxCheckin(LPCHARACTER ch, const char * c_pData)
 #ifdef ENABLE_WEARED_ITEM_SAFEBOX_BLOCK
 	if (pkItem->IsEquipped())
 	{
-		ch->ChatPacket(CHAT_TYPE_INFO, LC_TEXT ("Du kannst getragene Gegenstände nicht lagern."));
+		ch->ChatPacket(CHAT_TYPE_INFO, LC_TEXT ("Du kannst getragene Gegenst?de nicht lagern."));
 		return;
 	}
 #endif

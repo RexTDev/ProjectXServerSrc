@@ -5370,8 +5370,11 @@ bool CHARACTER::UseItemEx(LPITEM item, TItemPos DestCell)
 										ChatPacket(CHAT_TYPE_INFO, LC_TEXT("속성을 변경할 수 없는 아이템입니다."));
 										return false;
 									}
-
+#ifdef ENABLE_ADD_5_BONUS_WITH_NORMAL_ADDER
+									if (item2->GetAttributeCount() < 5)
+#else
 									if (item2->GetAttributeCount() < 4)
+#endif
 									{
 										// 연재가 특수처리
 										// 절대로 연재가 추가 안될거라 하여 하드 코딩함.
@@ -5411,7 +5414,57 @@ bool CHARACTER::UseItemEx(LPITEM item, TItemPos DestCell)
 										}
 										char buf[21];
 										snprintf(buf, sizeof(buf), "%u", item2->GetID());
+										
+#ifdef ENABLE_ADD_BONUS_100_PERCENT
 
+	#ifdef ENABLE_ADD_5_BONUS_AT_ONCE
+										if (item2->GetAttributeCount() == 0)
+										{
+											item2->AddAttribute();
+											item2->AddAttribute();
+											item2->AddAttribute();
+											item2->AddAttribute();
+											item2->AddAttribute();
+										}
+										else if(item2->GetAttributeCount() == 1)
+										{
+											item2->AddAttribute();
+											item2->AddAttribute();
+											item2->AddAttribute();
+											item2->AddAttribute();
+										}
+										else if(item2->GetAttributeCount() == 2)
+										{
+											item2->AddAttribute();
+											item2->AddAttribute();
+											item2->AddAttribute();
+										}
+										else if(item2->GetAttributeCount() == 3)
+										{
+											item2->AddAttribute();
+											item2->AddAttribute();
+										}
+										else if(item2->GetAttributeCount() == 4)
+										{
+											item2->AddAttribute();
+										}
+	#else
+										item2->AddAttribute();
+	#endif
+										ChatPacket(CHAT_TYPE_INFO, LC_TEXT("속성 추가에 성공하였습니다."));
+
+										int iAddedIdx = item2->GetAttributeCount() - 1;
+										LogManager::instance().ItemLog(
+												GetPlayerID(),
+												item2->GetAttributeType(iAddedIdx),
+												item2->GetAttributeValue(iAddedIdx),
+												item->GetID(),
+												"ADD_ATTRIBUTE_SUCCESS",
+												buf,
+												GetDesc()->GetHostName(),
+												item->GetOriginalVnum());
+										item->SetCount(item->GetCount() - 1);
+#else
 										if (number(1, 100) <= aiItemAttributeAddPercent[item2->GetAttributeCount()])
 										{
 											item2->AddAttribute();
@@ -5435,6 +5488,7 @@ bool CHARACTER::UseItemEx(LPITEM item, TItemPos DestCell)
 										}
 
 										item->SetCount(item->GetCount() - 1);
+#endif
 									}
 									else
 									{
@@ -5456,7 +5510,21 @@ bool CHARACTER::UseItemEx(LPITEM item, TItemPos DestCell)
 									{
 										char buf[21];
 										snprintf(buf, sizeof(buf), "%u", item2->GetID());
+#ifdef ENABLE_ADD_BONUS_100_PERCENT
+										item2->AddAttribute();
+										ChatPacket(CHAT_TYPE_INFO, LC_TEXT("속성 추가에 성공하였습니다."));
 
+										int iAddedIdx = item2->GetAttributeCount() - 1;
+										LogManager::instance().ItemLog(
+												GetPlayerID(),
+												item2->GetAttributeType(iAddedIdx),
+												item2->GetAttributeValue(iAddedIdx),
+												item->GetID(),
+												"ADD_ATTRIBUTE2_SUCCESS",
+												buf,
+												GetDesc()->GetHostName(),
+												item->GetOriginalVnum());
+#else
 										if (number(1, 100) <= aiItemAttributeAddPercent[item2->GetAttributeCount()])
 										{
 											item2->AddAttribute();
@@ -5478,7 +5546,7 @@ bool CHARACTER::UseItemEx(LPITEM item, TItemPos DestCell)
 											ChatPacket(CHAT_TYPE_INFO, LC_TEXT("속성 추가에 실패하였습니다."));
 											LogManager::instance().ItemLog(this, item, "ADD_ATTRIBUTE2_FAIL", buf);
 										}
-
+#endif
 										item->SetCount(item->GetCount() - 1);
 									}
 									else if (item2->GetAttributeCount() == 5)

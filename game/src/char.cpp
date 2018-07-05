@@ -2713,8 +2713,8 @@ void CHARACTER::ComputePoints()
 		}
 
 		// 기본 값들
-		SetPoint(POINT_MOV_SPEED,	100);
-		SetPoint(POINT_ATT_SPEED,	100);
+		SetPoint(POINT_MOV_SPEED,	160);
+		SetPoint(POINT_ATT_SPEED,	130);
 		PointChange(POINT_ATT_SPEED, GetPoint(POINT_PARTY_HASTE_BONUS));
 		SetPoint(POINT_CASTING_SPEED,	100);
 	}
@@ -3407,9 +3407,9 @@ int CHARACTER::GetLimitPoint(BYTE type) const
 			min_limit = 0;
 
 			if (IsPC())
-				limit = 200;
+				limit = 253;
 			else
-				limit = 250;
+				limit = 253;
 			break;
 
 		case POINT_STEAL_HP:

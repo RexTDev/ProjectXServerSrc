@@ -128,6 +128,14 @@ enum eCommonDefines
 
 
 
+//-----NEW OPTIONS REXTDEV----->
+#define ENABLE_ADD_BONUS_100_PERCENT
+#ifdef ENABLE_ADD_5_BONUS_WITH_NORMAL_ADDER
+	#define ENABLE_ADD_5_BONUS_AT_ONCE
+#endif
+#define ENABLE_ADD_5_BONUS_WITH_NORMAL_ADDER
+
+
 
 //-----OPTIONS----->
 #define ENABLE_EXTEND_INVEN_SYSTEM			// Aktiviert 4 Pages / deaktiviert 2 Pages
