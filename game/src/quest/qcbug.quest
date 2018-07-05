@@ -1,0 +1,24 @@
+--[[
+    smtg
+--]]
+quest gcbug begin
+    state start begin
+        when sex.use begin
+			a=[[asd]]
+			b="asd"
+			c='asd'
+			#d=[['"asd]]
+			e="asd\"asd\"\'\'\'"
+			#f=" \" \" \" \" "
+			#g=[[ \[\[ \]\] ]]
+			h=" \[\[ \]\] "
+			asd="fucktheway"
+			if "a"!="b" then end
+			--"ÀÁÈÉÌÍÒÓÙÚàáèéìíòóùú"
+			say("asd") #asd
+			//asd
+
+        end
+    end
+end
+
